@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const Chatbot = {
     // --- CONFIGURATION ---
-    N8N_WEBHOOK_URL: 'http://localhost:5678/webhook/5f855f34-9111-4ef3-b95b-17a7d750d658',
+    N8N_WEBHOOK_URL: 'https://d0b457174d36.ngrok-free.app/webhook/5f855f34-9111-4ef3-b95b-17a7d750d658',
     WHATSAPP_HUMAN_NUMBER: '22891480288',
     WHATSAPP_BOT_NUMBER: '22898832644', // Remplacez par le numéro du bot si différent
 
