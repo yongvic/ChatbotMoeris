@@ -1,0 +1,366 @@
+:root {
+    --brand-color: #b88d0e;
+    --brand-color-dark: #a37c0c;
+    --whatsapp-color: #25D366;
+    --background-light: #f9f4e8;
+    --text-dark: #1f2937;
+    --text-light: #ffffff;
+    --gray-light: #f3f4f6;
+    --gray-medium: #e5e7eb;
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-brand: rgba(184, 141, 14, 0.3);
+    --font-family: 'Inter', sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: var(--font-family, sans-serif);
+}
+
+iframe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+}
+
+@keyframes subtlePulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 var(--shadow-brand);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(184, 141, 14, 0);
+    }
+}
+
+@keyframes typingBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes messageIn {
+    from {
+        transform: translateY(15px) scale(0.98);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.floating-button {
+    background-color: var(--brand-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: subtlePulse 2.5s infinite;
+}
+
+#chatIcon {
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.floating-button.open #chatIcon {
+    transform: rotate(225deg);
+}
+
+.chat-window {
+    position: fixed;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transform-origin: bottom right;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    width: 90%;
+    max-width: 400px;
+    height: 80vh;
+    max-height: 650px;
+    right: 1rem;
+    bottom: 5.5rem;
+}
+
+@media (min-width: 640px) {
+    .chat-window {
+        right: 1.5rem;
+        bottom: 6rem;
+    }
+}
+
+.chat-window.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, var(--brand-color), #d4af37);
+}
+
+.header-button {
+    transition: transform 0.3s ease;
+}
+
+.header-button:hover {
+    transform: scale(1.2);
+}
+
+.chat-messages {
+    background-color: var(--background-light);
+}
+
+.message-bubble {
+    box-shadow: 0 4px 10px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.message-bubble:hover {
+    transform: scale(1.03) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.user-bubble {
+    background-color: var(--brand-color-dark);
+    color: var(--text-light);
+}
+
+.bot-bubble {
+    background-color: #ffffff;
+    color: var(--text-dark);
+    border: 1px solid var(--gray-medium);
+}
+
+.quick-replies-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+    animation: messageIn 0.5s ease forwards;
+}
+
+.quick-reply-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid var(--gray-medium);
+    text-align: left;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-reply-btn i {
+    color: var(--brand-color);
+}
+
+.quick-reply-btn:hover {
+    border-color: var(--brand-color);
+    transform: translateX(5px);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease forwards;
+    position: relative;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.modal-content p {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+}
+
+.modal-choice-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.modal-choice-btn:hover {
+    opacity: 0.9;
+}
+
+/* Styles génériques */
+#typingIndicator {
+    background-color: var(--background-light) !important;
+}
+
+#typingIndicator .dot {
+    animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+#typingIndicator .dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+#typingIndicator .dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.input-area {
+    border-top: 1px solid var(--gray-medium);
+}
+
+#chatInput {
+    background-color: var(--gray-light);
+    transition: box-shadow 0.3s ease;
+    resize: none;
+    overflow-y: auto;
+    line-height: 1.5;
+    max-height: 120px;
+}
+
+#chatInput:focus {
+    box-shadow: 0 0 0 2px var(--brand-color);
+}
+
+#actionButton {
+    background-color: var(--brand-color);
+    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+#actionButton.recording {
+    transform: scale(1.15);
+    background-color: #ef4444;
+}
+
+.emoji-picker-container {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.emoji-picker-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.audio-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.play-pause-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    width: 30px;
+}
+
+.progress-bar-container {
+    flex-grow: 1;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.audio-duration {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+}
